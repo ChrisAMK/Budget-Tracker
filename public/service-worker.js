@@ -1,3 +1,4 @@
+// Specifying the paths of the files that are to be cached
 const FILES_TO_CACHE = [
     "/",
     "/index.html",
@@ -12,15 +13,16 @@ const FILES_TO_CACHE = [
   const CACHE_NAME = "static-cache-v2";
   const DATA_CACHE_NAME = "data-cache-v1";
   
-  // install
+  // Adding an event listener in the Service worker for when we initially install the service worker
   self.addEventListener("install", function(evt) {
+    // Once we install the Service worker, we are adding all the files specified to the cache
     evt.waitUntil(
       caches.open(CACHE_NAME).then(cache => {
         console.log("Your files were pre-cached successfully!");
         return cache.addAll(FILES_TO_CACHE);
       })
     );
-  
+    
     self.skipWaiting();
   });
   
@@ -41,7 +43,7 @@ const FILES_TO_CACHE = [
     self.clients.claim();
   });
   
-  // fetch
+  // wait for a fetch request, when we receive one we open the cache and check if the request matches any data we already have stored
   self.addEventListener("fetch", function(evt) {
     // cache successful requests to the API
     if (evt.request.url.includes("/api/")) {
