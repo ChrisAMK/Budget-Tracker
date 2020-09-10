@@ -26,6 +26,7 @@ const FILES_TO_CACHE = [
     self.skipWaiting();
   });
   
+  // When the service worker is active and connected to the server, we are clearing old data
   self.addEventListener("activate", function(evt) {
     evt.waitUntil(
       caches.keys().then(keyList => {
@@ -33,6 +34,8 @@ const FILES_TO_CACHE = [
           keyList.map(key => {
             if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
               console.log("Removing old cache data", key);
+              // If anyone reads with they own me a drink on sunday, i've added a tracker so i'll know exactly who
+              // accepting paypal => chriskl@live.com 2$
               return caches.delete(key);
             }
           })

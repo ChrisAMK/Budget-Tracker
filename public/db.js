@@ -3,12 +3,10 @@ let db;
 const request = window.indexedDB.open("budget", 1);
 
 request.onupgradeneeded = (event) => {
-
     let db = event.target.result;
     // Creating an Object store and assigning it the name of pending to represent the pending data that needs to be sent to the database
     // When the connection is back online
     db.createObjectStore("pending", { keypath: "listid", autoIncrement: true })
-    
 };
 
 // onsucess handles the event of a successful connection
@@ -27,7 +25,6 @@ request.onerror = () => {
 
 // this function creates access to our indexeddb so we can make changes
 const saveRecord = (record) => {
-    console.log("YOO")
     const dbConnection = request.result;
     const transaction = dbConnection.transaction(["pending"], "readwrite");
     const pendingStore = transaction.objectStore("pending");
@@ -41,7 +38,6 @@ const checkDatabase = () => {
     const transaction = dbConnection.transaction(["pending"], "readonly");
     const pendingStore = transaction.objectStore("pending");
     const getAll = pendingStore.getAll();
-    console.log(getAll)
 
     // Once we can get all the results from the offline IndexedDB, on success we then put in a post request with the data stored
     getAll.onsuccess = () => {
@@ -59,12 +55,10 @@ const checkDatabase = () => {
               // if successful, open a transaction on your pending db and clear everyting
               const transaction = dbConnection.transaction(["pending"], "readwrite")
               const pendingStore = transaction.objectStore("pending");
-              const clearStore = pendingStore.clear();
-              console.log(clearStore)
+              pendingStore.clear();
             });
         }
       };
 }
-
 // Tells the app to checkDatabase when the app comes back to being online
 window.addEventListener('online', checkDatabase);
