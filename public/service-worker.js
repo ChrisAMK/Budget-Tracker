@@ -3,8 +3,14 @@ const FILES_TO_CACHE = [
     "/index.html",
     "/styles.css",
     "/index.js",
+    "/db.js",
+    "/api.js",
+    "/transaction.js",
+    // "../routes/api.js",
+    // "../models/transaction.js",
     "/icons/icon-192x192.png",
     "/icons/icon-512x512.png",
+    "/manifest.webmanifest"
   ];
   
   const CACHE_NAME = "static-cache-v2";
